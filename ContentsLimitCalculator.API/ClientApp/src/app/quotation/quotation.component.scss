@@ -1,0 +1,20 @@
+.mainContent{
+    margin: 0 20%;
+}
+
+.blockPanel {
+    display: block;
+    margin: 20px 0px;
+    width: 100%;
+}
+
+.flexPanel {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+input,select,button {
+    margin: 5px 5px;
+}

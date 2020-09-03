@@ -1,0 +1,50 @@
+<div class="mainContent">
+  <div class="blockPanel">
+    <mat-list *ngFor="let category of quotation.categories">
+      <div>
+        <h4>{{category.name}} ({{category.totalValue | currency}})</h4>
+      </div>
+      <mat-list-item *ngFor="let item of category.items">
+        <h4 mat-line>{{item.name | titlecase}}</h4>
+        {{item.value | currency}}
+        <button mat-icon-button (click)="DeleteItem(item.id)"><span><mat-icon>delete</mat-icon></span></button>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div class="blockPanel">
+    <strong><span *ngIf="quotation" style="text-align:center;">Total value: {{quotation.totalValue | currency}}</span></strong>
+  </div>
+
+  <form novalidate (ngSubmit)="addNewItem()" class="blockPanel">
+    <div class="flexPanel">
+      <input class="form-control"
+             placeholder="Item Name"
+             name="name"
+             [(ngModel)]="newItem.name"
+             required
+             minlength="5"
+             pattern="^[A-Za-z ]+$" />
+      <input class="form-control"
+             placeholder="Value"
+             type="text"
+             name="value"
+             [value]="newItem.value | currency:'CAD':true:'1.0-2'"
+             (input)="newItem.value=stripCurrency($event.target.value)*1"
+             required
+             minlength="1"
+             pattern="^[0-9\.]+$" />
+      <select type="number" name="categoryId" class="form-control"
+              (change)="newItem.categoryId=$event.target.value*1" [value]="newItem.categoryId">
+        <option type="number" value="-1">Please Select</option>
+        <ng-container *ngFor="let category of availableCategories">
+          <option type="number" [value]="category.id">{{category.name}}</option>
+        </ng-container>
+      </select>
+      <button class="btn btn-primary" type="submit">
+        Add
+      </button>
+    </div>
+  </form>
+</div>
+
